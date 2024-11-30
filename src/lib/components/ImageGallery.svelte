@@ -5,7 +5,7 @@
 
     async function deleteImage(image: string): Promise<void> {
         await fetch(
-            CONFIG.getApiUrl("images/delete") + image, {
+            CONFIG.getApiUrl("images/delete/") + image, {
                 method: "DELETE"
             }
         ).then(response => {
