@@ -24,7 +24,7 @@
 {#each images as image, i}
     <div class="image-card">
         <p>{i+1}</p>
-        <a href={`https://svelte-playground-production.up.railway.app/images/${image}`}>
+        <a href={`https://svelte-playground-production.up.railway.app/images/${image}`} target="_blank">
             <img
                 src={`https://svelte-playground-production.up.railway.app/images/${image}`}
                 alt={image}
