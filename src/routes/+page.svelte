@@ -6,7 +6,7 @@
     let images: string[] = $state([]);
 
     onMount(() => {
-        fetch ("http://localhost:5000/images/all", {
+        fetch ("https://svelte-playground-production.up.railway.app/images/all", {
             method: "GET"
         }).then(response => {
             if (!response.ok) {
@@ -14,6 +14,7 @@
             }
             return response.json();
         }).then(json => {
+            console.log(json);
             images = json.images;
             if (images == null) {
                 images = [];

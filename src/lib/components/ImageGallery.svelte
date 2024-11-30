@@ -3,7 +3,7 @@
 
     async function deleteImage(image: string): Promise<void> {
         await fetch(
-            "http://localhost:5000/images/delete/" + image, {
+            "https://svelte-playground-production.up.railway.app/images/delete/" + image, {
                 method: "DELETE"
             }
         ).then(response => {
@@ -20,18 +20,20 @@
     } 
 </script>
 
-<div class="image-gallery">
+<section class="image-gallery">
 {#each images as image, i}
     <div class="image-card">
         <p>{i+1}</p>
-        <img
-            src={`http://localhost:5000/images/${image}`}
-            alt={image}
-        >
+        <a href={`https://svelte-playground-production.up.railway.app/images/${image}`}>
+            <img
+                src={`https://svelte-playground-production.up.railway.app/images/${image}`}
+                alt={image}
+            >
+        </a>
         <button onclick={(() => deleteImage(image))}>Delete image</button>
     </div>
 {/each}
-</div>
+</section>
 
 <style lang="scss">
     .image-gallery {
@@ -39,6 +41,7 @@
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
+        justify-content: center;
 
         .image-card {
             overflow:hidden;
@@ -48,17 +51,37 @@
             align-items: center;
             gap: 12px;
             padding: 24px;
-            width: max(25%, 108px);
+            width: max(25%, 330px);
+
+            font-size: 1.4em;
+
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
             img {
-                max-width: 90%;
-                max-height: 90%;
-                object-fit: contain;
+                width: 100%;
+                height: 20vh;
+                object-fit: cover;
+                border-radius: 8px;
+                transition: 250ms;
+
+                &:hover {
+                    transform: scale(1.04);
+                }
+            }
+
+            button {
+                transition: 250ms;
+                &:hover {
+                    transform: scale(1.06);
+                }
             }
 
             p {
                 font-weight: 500;
-                font-size: 1.4em;
                 margin: 0;
             }
         }

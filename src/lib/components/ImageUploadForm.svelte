@@ -2,13 +2,14 @@
     let { images = $bindable([]) } = $props();
 
     let file: Blob | null = null;
-    let errorMsg: string | null = $state(null);
+    let infoMsg: string | null = $state(null);
 
     function handleFileSelection(event: Event): void {
         file = event.target.files[0];
     }
 
     async function uploadImage(event: Event): Promise<void> {
+        infoMsg = "Uploading image...";
         event.preventDefault();
         if (file === null) {
             alert("Select a file before trying to upload it!");
@@ -16,13 +17,13 @@
         }
         let formData = new FormData();
         formData.append('image', file);
-        await fetch("http://localhost:5000/images/upload", 
+        await fetch("https://svelte-playground-production.up.railway.app/images/upload", 
             { 
                 method: "POST",
                 body: formData
-
             }
         ).then(response => {
+            console.log("Response Recieved");
             if (!response.ok) {
                 throw new Error("Response not ok when uploading file");
             }
@@ -34,9 +35,14 @@
                 throw new Error("Malformed response form server");
             }
             images.push(filename);
-            errorMsg = null;
+            infoMsg = "Image uploaded!"; setTimeout(() => {
+                infoMsg = null;
+            }, 3000)
         }).catch(error => {
-            errorMsg = error;
+            infoMsg = "Error uploading image!";
+            setTimeout(() => {
+                infoMsg = null;
+            }, 3000)
             console.log(error);
         });
     }
@@ -45,11 +51,18 @@
 <div class="upload-form">
     <input type="file" accept="image/*" onchange={handleFileSelection}>
     <button onclick={uploadImage}>Upload image</button>
-    {#if errorMsg}
-    <p class="error">{errorMsg}</p>
+    {#if infoMsg}
+    <p class="error">{infoMsg}</p>
     {/if}
 </div>
 
 <style lang="scss">
+    * {
+        display: inline;
+    }
+
+    p {
+        padding: 0 2em;
+    }
 </style>
 
