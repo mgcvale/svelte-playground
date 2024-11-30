@@ -1,8 +1,10 @@
 import string
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, send_from_directory, send_file
 from flask_cors import CORS, cross_origin
 import random
 import os
+from io import BytesIO
+from PIL import Image
 
 app = Flask(__name__)
 CORS(app)
@@ -39,6 +41,25 @@ def upload_image():
 @app.route('/images/<image_name>', methods=["GET"])
 def serve_image(image_name):
     return send_from_directory(app.config['UPLOAD_FOLDER'], image_name, mimetype="image/jpeg")
+
+@cross_origin
+@app.route('/images/preview/<image_name>', methods=["GET"])
+def serve_preview(image_name):
+    image = Image.open(os.path.join(app.config['UPLOAD_FOLDER'], image_name))
+    max_size = (360, 360)
+    image.thumbnail(max_size)
+    image = image.convert('RGB')
+
+    img_io = BytesIO()
+    image.save(img_io, format="JPEG", quality=40, optimize=True)
+    img_io.seek(0)
+
+    return send_file(
+        img_io,
+        mimetype="image/jpeg",
+    )
+
+
 
 @cross_origin
 @app.route('/images/delete/<image_name>', methods=["DELETE"])
