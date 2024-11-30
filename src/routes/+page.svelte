@@ -2,11 +2,12 @@
 	import ImageGallery from "$lib/components/ImageGallery.svelte";
 	import ImageUploadForm from "$lib/components/ImageUploadForm.svelte";
 	import { onMount } from "svelte";
+    import { CONFIG } from "../config";
 
     let images: string[] = $state([]);
 
     onMount(() => {
-        fetch ("https://svelte-playground-production.up.railway.app/images/all", {
+        fetch (CONFIG.getApiUrl("/images/all"), {
             method: "GET"
         }).then(response => {
             if (!response.ok) {
@@ -27,9 +28,9 @@
 </script>
 
 <main>
-<h1>Image upload website</h1>
-<ImageUploadForm bind:images={images}></ImageUploadForm>
-<ImageGallery bind:images={images}></ImageGallery>
+    <h1>Image upload website</h1>
+    <ImageUploadForm bind:images={images}></ImageUploadForm>
+    <ImageGallery bind:images={images}></ImageGallery>
 </main>
 
 <style lang="scss">

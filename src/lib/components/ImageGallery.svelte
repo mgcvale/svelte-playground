@@ -1,9 +1,11 @@
 <script lang="ts">
+    import { CONFIG } from "../../config";
+
     let { images = $bindable([]) } = $props();
 
     async function deleteImage(image: string): Promise<void> {
         await fetch(
-            "https://svelte-playground-production.up.railway.app/images/delete/" + image, {
+            CONFIG.getApiUrl("/images/delete") + image, {
                 method: "DELETE"
             }
         ).then(response => {
@@ -24,9 +26,9 @@
 {#each images as image, i}
     <div class="image-card">
         <p>{i+1}</p>
-        <a href={`https://svelte-playground-production.up.railway.app/images/${image}`} target="_blank">
+        <a href={`${CONFIG.getApiUrl("/images/")}${image}`} target="_blank">
             <img
-                src={`https://svelte-playground-production.up.railway.app/images/${image}`}
+                src={`${CONFIG.getApiUrl("/images/preview/")}${image}`}
                 alt={image}
             >
         </a>

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { CONFIG } from "../../config";
 
     let { images = $bindable([]) } = $props();
 
@@ -26,7 +27,7 @@
             infoMsg = "Uploading image " + (i+1) + " of " + files.length;
             let formData = new FormData();
             formData.append('image', files[i]);
-            await fetch("https://svelte-playground-production.up.railway.app/images/upload", 
+            await fetch(CONFIG.getApiUrl("/images/upload"), 
                 { 
                     method: "POST",
                     body: formData
