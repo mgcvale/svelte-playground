@@ -5,7 +5,7 @@
 
     async function deleteImage(image: string): Promise<void> {
         await fetch(
-            CONFIG.getApiUrl("/images/delete") + image, {
+            CONFIG.getApiUrl("images/delete") + image, {
                 method: "DELETE"
             }
         ).then(response => {
@@ -26,9 +26,9 @@
 {#each images as image, i}
     <div class="image-card">
         <p>{i+1}</p>
-        <a href={`${CONFIG.getApiUrl("/images/")}${image}`} target="_blank">
+        <a href={`${CONFIG.getApiUrl("images/")}${image}`} target="_blank">
             <img
-                src={`${CONFIG.getApiUrl("/images/preview/")}${image}`}
+                src={`${CONFIG.getApiUrl("images/preview/")}${image}`}
                 alt={image}
             >
         </a>

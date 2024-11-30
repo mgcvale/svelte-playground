@@ -7,7 +7,7 @@
     let images: string[] = $state([]);
 
     onMount(() => {
-        fetch (CONFIG.getApiUrl("/images/all"), {
+        fetch (CONFIG.getApiUrl("images/all"), {
             method: "GET"
         }).then(response => {
             if (!response.ok) {

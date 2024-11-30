@@ -18,7 +18,6 @@ app.config['IMAGE_PREFIX_SIZE'] = IMAGE_PREFIX_SIZE
 def generate_random_string(n: int) -> str:
     return ''.join(random.choices(string.ascii_letters + string.digits, k=n))
 
-
 @cross_origin
 @app.route('/images/upload', methods = ["POST"])
 def upload_image():
@@ -58,8 +57,6 @@ def serve_preview(image_name):
         img_io,
         mimetype="image/jpeg",
     )
-
-
 
 @cross_origin
 @app.route('/images/delete/<image_name>', methods=["DELETE"])
