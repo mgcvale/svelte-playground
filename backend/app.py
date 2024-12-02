@@ -50,7 +50,7 @@ def serve_preview(image_name):
     image = image.convert('RGB')
 
     img_io = BytesIO()
-    image.save(img_io, format="JPEG", quality=40, optimize=True)
+    image.save(img_io, format="WEBP", quality=40, optimize=True)
     img_io.seek(0)
 
     return send_file(
